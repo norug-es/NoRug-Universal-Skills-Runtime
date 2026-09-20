@@ -1,0 +1,55 @@
+services:
+  skills:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    expose:
+      - "3085"
+    environment:
+      NODE_ENV: production
+      PORT: "3085"
+      HOSTNAME: "0.0.0.0"
+      SWAT_CORE_BASE_URL: ${SWAT_CORE_BASE_URL:-https://bitcoiners.norug.es}
+      SWAT_CORE_OPENAPI_URL: ${SWAT_CORE_OPENAPI_URL:-https://bitcoiners.norug.es/openapi.json}
+      SWAT_CORE_API_KEY: ${SWAT_CORE_API_KEY:-}
+      SKILLS_GATEWAY_API_KEY: ${SKILLS_GATEWAY_API_KEY:-}
+      SWAT_EXECUTION_ENABLED: ${SWAT_EXECUTION_ENABLED:-false}
+      SWAT_ALLOW_WRITES: ${SWAT_ALLOW_WRITES:-false}
+      SWAT_ALLOW_ADMIN: ${SWAT_ALLOW_ADMIN:-false}
+      OPENAPI_CACHE_TTL_MS: ${OPENAPI_CACHE_TTL_MS:-300000}
+      DATABASE_URL: ${DATABASE_URL:-}
+      DB_SSL: ${DB_SSL:-false}
+      DB_POOL_MAX: ${DB_POOL_MAX:-10}
+      TELEMETRY_HASH_SALT: ${TELEMETRY_HASH_SALT:-}
+      TELEMETRY_STORE_QUERY_TEXT: ${TELEMETRY_STORE_QUERY_TEXT:-false}
+      DASHBOARD_ADMIN_KEY: ${DASHBOARD_ADMIN_KEY:-}
+      AUTH_PEPPER: ${AUTH_PEPPER:-}
+      AUTH_SESSION_DAYS: ${AUTH_SESSION_DAYS:-30}
+      APP_BASE_URL: ${APP_BASE_URL:-https://skills.norug.es}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      SMTP_FROM: ${SMTP_FROM:-NoRug Skills <noreply@norug.es>}
+      OBSERVABILITY_INGEST_KEY: ${OBSERVABILITY_INGEST_KEY:-}
+      STRIPE_SECRET_KEY: ${STRIPE_SECRET_KEY:-}
+      STRIPE_WEBHOOK_SECRET: ${STRIPE_WEBHOOK_SECRET:-}
+      STRIPE_PRICE_PLUS: ${STRIPE_PRICE_PLUS:-}
+      STRIPE_PRICE_PRO: ${STRIPE_PRICE_PRO:-}
+      STRIPE_PRICE_BUSINESS: ${STRIPE_PRICE_BUSINESS:-}
+      STABLECOIN_PAYMENT_CONFIG_JSON: ${STABLECOIN_PAYMENT_CONFIG_JSON:-[]}
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,noexec,nosuid
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3085/api/v1/health').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s

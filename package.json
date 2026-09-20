@@ -1,0 +1,32 @@
+{
+  "name": "norug-universal-skills-runtime",
+  "version": "2.6.0-alpha.1",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "smoke": "node scripts/smoke.mjs",
+    "check:registry": "node scripts/check-registry.mjs",
+    "check:runtime": "node scripts/check-runtime.mjs",
+    "db:migrate": "node scripts/migrate.mjs",
+    "check:v24": "node scripts/check-v24.mjs",
+    "check:v25": "node scripts/check-v25.mjs",
+    "check:v26": "node scripts/check-v26.mjs"
+  },
+  "dependencies": {
+    "next": "16.0.10",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "pg": "^8.13.1",
+    "nodemailer": "^6.9.16",
+    "stripe": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "typescript": "^5.7.0",
+    "@types/pg": "^8.11.10",
+    "@types/nodemailer": "^6.4.17"
+  }
+}
