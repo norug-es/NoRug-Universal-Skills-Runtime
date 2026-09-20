@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+const p=new URL('../registry/skills.json',import.meta.url);
+const x=JSON.parse(fs.readFileSync(p,'utf8'));
+if(x.portable_skill_count!==25)throw new Error('portable_skill_count mismatch');
+if(x.swat_core_registry?.coverage_policy!=='all HTTP operations are imported; no tag or method is excluded')throw new Error('SWAT coverage policy mismatch');
+const dirs=fs.readdirSync(new URL('../skills/finance/',import.meta.url),{withFileTypes:true}).filter(x=>x.isDirectory()).length;
+if(dirs!==25)throw new Error(`finance directory count mismatch: ${dirs}`);
+console.log('REGISTRY_GATE=PASS');
+console.log('PORTABLE_SKILL_COUNT='+x.portable_skill_count);
+console.log('SWAT_OPENAPI_MODE='+x.swat_core_registry.mode);

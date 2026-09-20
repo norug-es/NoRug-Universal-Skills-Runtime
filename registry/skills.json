@@ -1,0 +1,12 @@
+{
+  "runtime_version": "2.1.0-alpha.1",
+  "portable_skill_domains": ["finance"],
+  "portable_skill_count": 25,
+  "swat_core_registry": {
+    "mode": "dynamic-from-openapi",
+    "source": "https://bitcoiners.norug.es/openapi.json",
+    "coverage_policy": "all HTTP operations are imported; no tag or method is excluded",
+    "execution_policy": "discovery always; execution gated separately for reads, writes and administration"
+  },
+  "planned_domains": ["research","osint","cybersecurity","blockchain","smart-contracts","threat-intelligence","forensics","software-engineering","swat"]
+}
