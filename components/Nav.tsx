@@ -1,0 +1,1 @@
+import Link from "next/link";export function Nav(){return <nav className="nav"><Link className="brand" href="/"><span>NoRug</span> Skills Runtime</Link><div className="links"><Link href="/Pricing">Pricing</Link><Link href="/Docs/es">Docs</Link><a href="/api/v1/skills">Registry API</a><a href="/api/v1/health">Health</a></div></nav>}

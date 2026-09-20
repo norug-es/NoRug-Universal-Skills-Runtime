@@ -1,0 +1,1 @@
+import {listPlans} from '@/lib/plans';import {publicConfigs} from '@/lib/stablecoin';export async function GET(){return Response.json({currency:'usd',plans:await listPlans(),stablecoin_routes:publicConfigs(),crypto_mode:'manual_30_day_renewal'})}

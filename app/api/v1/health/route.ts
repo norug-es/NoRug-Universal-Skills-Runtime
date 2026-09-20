@@ -1,0 +1,1 @@
+export async function GET(){return Response.json({service:'norug-universal-skills-runtime',version:'2.2.0-alpha.1',status:'ok',telemetry:{database_configured:!!process.env.DATABASE_URL},time:new Date().toISOString()})}

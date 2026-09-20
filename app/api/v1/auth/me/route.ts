@@ -1,0 +1,2 @@
+import {userFromRequest} from '@/lib/user-auth';import {db} from '@/lib/database';import {usageSummary} from '@/lib/billing';
+export async function GET(req:Request){const u=await userFromRequest(req);if(!u)return Response.json({error:'unauthorized'},{status:401});const p=db();const sponsor=u.sponsor_id&&p?(await p.query(`SELECT sponsor_code,name FROM sponsors WHERE id=$1`,[u.sponsor_id])).rows[0]||null:null;return Response.json({user:{id:u.id,email:u.email,display_name:u.display_name,company:u.company,sponsor,referral_code:u.referral_code},billing:await usageSummary(u.id)})}

@@ -1,0 +1,2 @@
+import {consumePasswordReset,validatePassword} from '@/lib/user-auth';
+export async function POST(req:Request){const b=await req.json().catch(()=>({}));const p=String(b.password||'');if(!validatePassword(p))return Response.json({error:'weak_password'},{status:400});try{await consumePasswordReset(String(b.token||''),p);return Response.json({ok:true})}catch{return Response.json({error:'invalid_or_expired_token'},{status:400})}}

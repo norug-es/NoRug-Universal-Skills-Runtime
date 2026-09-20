@@ -1,0 +1,2 @@
+import {adminAuthorized} from '@/lib/admin-auth';import {createCampaign} from '@/lib/referrals';
+export async function POST(req:Request,{params}:{params:Promise<{id:string}>}){if(!adminAuthorized(req))return Response.json({error:'unauthorized'},{status:401});try{const {id}=await params;const body=await req.json();if(!body?.campaign_code)return Response.json({error:'campaign_code_required'},{status:400});return Response.json(await createCampaign(Number(id),body),{status:201})}catch(e:any){return Response.json({error:e?.message||'create_failed'},{status:400})}}

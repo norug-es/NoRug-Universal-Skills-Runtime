@@ -1,0 +1,2 @@
+import {userFromRequest} from '@/lib/user-auth';import {stripe} from '@/lib/stripe';
+export async function POST(req:Request){const u=await userFromRequest(req);if(!u)return Response.json({error:'unauthorized'},{status:401});if(!u.stripe_customer_id)return Response.json({error:'stripe_customer_not_found'},{status:404});const base=process.env.APP_BASE_URL||new URL(req.url).origin;const x=await stripe().billingPortal.sessions.create({customer:u.stripe_customer_id,return_url:`${base}/Account`});return Response.json({url:x.url})}

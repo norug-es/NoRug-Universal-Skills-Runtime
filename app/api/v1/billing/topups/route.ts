@@ -1,0 +1,1 @@
+import {listCreditPacks} from '@/lib/credit-commerce';import {publicConfigs} from '@/lib/stablecoin';export async function GET(){return Response.json({packs:await listCreditPacks(),stablecoin_routes:publicConfigs()})}

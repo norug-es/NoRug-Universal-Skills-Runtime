@@ -1,0 +1,2 @@
+import {capabilityToTool,getCoreContract} from '@/lib/swat-openapi';
+export async function GET(){try{const x=await getCoreContract();return Response.json({provider:'ollama',format:'tool-calling',count:x.capabilities.length,tools:x.capabilities.map(c=>({type:'function',function:{name:capabilityToTool(c).name,description:capabilityToTool(c).description,parameters:capabilityToTool(c).inputSchema}}))})}catch(e:any){return Response.json({error:'core_contract_unavailable',message:e.message},{status:502})}}

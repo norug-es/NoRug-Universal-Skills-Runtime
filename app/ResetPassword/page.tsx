@@ -1,0 +1,1 @@
+import {ResetForm} from '@/components/AuthForms';export default function Page(){return <main className="dashShell"><div className="dashHead"><div className="eyebrow">Account recovery</div><h1>Set a new password</h1></div><div className="loginCard"><ResetForm/></div></main>}

@@ -1,0 +1,3 @@
+import {authHash,clearSessionCookie,SESSION_COOKIE} from '@/lib/user-auth';import {db} from '@/lib/database';
+function cookie(req:Request){const c=req.headers.get('cookie')||'';const m=c.match(new RegExp(`(?:^|;\\s*)${SESSION_COOKIE}=([^;]+)`));return m?decodeURIComponent(m[1]):''}
+export async function POST(req:Request){const p=db();const raw=cookie(req);if(p&&raw)await p.query(`UPDATE user_sessions SET revoked_at=now() WHERE token_hash=$1`,[authHash(raw)]).catch(()=>{});return new Response(JSON.stringify({ok:true}),{headers:{'content-type':'application/json','set-cookie':clearSessionCookie()}})}

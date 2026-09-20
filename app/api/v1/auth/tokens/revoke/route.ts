@@ -1,0 +1,2 @@
+import {userFromRequest} from '@/lib/user-auth';import {db} from '@/lib/database';
+export async function POST(req:Request){const u=await userFromRequest(req);if(!u)return Response.json({error:'unauthorized'},{status:401});const p=db();if(!p)return Response.json({error:'database_not_configured'},{status:503});const b=await req.json().catch(()=>({}));const r=await p.query(`UPDATE user_api_tokens SET revoked_at=now() WHERE id=$1 AND user_id=$2 AND revoked_at IS NULL RETURNING id`,[b.id,u.id]);return Response.json({revoked:!!r.rowCount})}

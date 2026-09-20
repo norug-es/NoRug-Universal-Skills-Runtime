@@ -1,0 +1,2 @@
+import {adminAuthorized} from '@/lib/admin-auth';import {sponsorDetail} from '@/lib/referrals';
+export async function GET(req:Request,{params}:{params:Promise<{id:string}>}){if(!adminAuthorized(req))return Response.json({error:'unauthorized'},{status:401});const {id}=await params;const days=Math.min(365,Math.max(1,Number(new URL(req.url).searchParams.get('days')||30)));const d=await sponsorDetail(Number(id),days);if(!d)return Response.json({error:'not_found'},{status:404});return Response.json(d)}
